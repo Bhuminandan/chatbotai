@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -16,7 +16,13 @@ export class AuthService {
     ) {}
 
     async validateUser(_username: string, _password: string): Promise<any> {
-        const user = await this.userService.findOneUser({ where: { username: _username } });
+        const user = await this.userService.findOneUser({
+             where: { username: _username },
+             relations: {
+                 role: true
+             }
+        });
+
         if (!user) {
             throw new BadRequestException({
               is_success: false,
@@ -35,9 +41,10 @@ export class AuthService {
     async signin(user: Partial<User>) {
         const payload = { 
             username: user.username, 
-            sub: user.id 
+            sub: user.id,
+            role_id : user.role.id
         };
-        
+
         return await this.generateTokens(payload);
     }
 

@@ -23,6 +23,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       { 
         where: { 
           username: payload.username 
+        },
+        relations: {
+          role: true
         }
       }
     );
@@ -36,7 +39,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     return {
       username: user.username,
-      userId: user.id
+      userId: user.id,
+      role_id: user.role.id
     }
   }
 };

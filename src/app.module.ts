@@ -4,6 +4,8 @@ import { GenaiModule } from './genai/genai.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
 @Module({
   imports: [
@@ -29,10 +31,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   ],
   controllers: [],
   providers: [
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: JwtAuthGuard,
-    // }
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    }
   ],
 })
 export class AppModule {}

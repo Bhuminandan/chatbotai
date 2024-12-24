@@ -2,6 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
+import { SwaggerModule } from '@nestjs/swagger';
+import { createDocument } from './config/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,8 +18,10 @@ async function bootstrap() {
     credentials: true,
   });
 
-  app.setGlobalPrefix('chat/api');
+  app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+
+  SwaggerModule.setup('api', app, createDocument(app));
 
   const port = configService.get('PORT') || 3000;
   await app.listen(port);

@@ -27,6 +27,7 @@ export class AuthController {
 
   @Post('/signup')
   @ApiBody({ type: createUserDto })
+  @AllowedAction(MODULE_NAME.GUEST)
   async signup(@Body() createUserDto: createUserDto) {
     const user = await this.authService.signup(createUserDto);
     return {

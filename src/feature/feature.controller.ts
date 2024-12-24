@@ -3,6 +3,7 @@ import { AllowedAction } from 'src/auth/decorator/action.decorator';
 import { MODULE_NAME } from 'src/utils';
 import { Feature } from './entities/feature.entity';
 import { FeatureService } from './feature.service';
+import { CreateFeatureDto } from './dto/feature.dto';
 
 @AllowedAction(MODULE_NAME.GUEST)
 @Controller('feature')
@@ -10,7 +11,7 @@ export class FeatureController {
   constructor(private featureService: FeatureService) {}
 
   @Post()
-  async create(@Body() body: Partial<Feature>) {
+  async create(@Body() body: CreateFeatureDto) {
     return this.featureService.create(body);
   }
 

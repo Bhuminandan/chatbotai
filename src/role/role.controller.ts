@@ -10,11 +10,11 @@ export class RoleController {
 
   @Post()
   @AllowedAction(
-    MODULE_NAME.ROLES,
-    ALLOWEDACTION.CREATE,
-    ALLOWEDACTION.READ,
-    ALLOWEDACTION.UPDATE,
-    ALLOWEDACTION.delete,
+    MODULE_NAME.GUEST,
+    // ALLOWEDACTION.CREATE,
+    // ALLOWEDACTION.READ,
+    // ALLOWEDACTION.UPDATE,
+    // ALLOWEDACTION.delete,
   )
   async createRole(@Body() body: CreateRoleDto) {
     try {

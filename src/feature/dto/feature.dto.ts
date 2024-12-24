@@ -1,7 +1,7 @@
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { ALLOWEDACTION, MODULE_NAME } from 'src/utils';
 
-export class CreateFeature {
+export class CreateFeatureDto {
   @IsString()
   @IsNotEmpty()
   @IsEnum(MODULE_NAME)

@@ -10,3 +10,9 @@ export enum MODULE_NAME {
     'GUEST' = 'Guest',
     'USER' = 'User'
 }
+
+
+export enum ROLESNAME {
+    'ADMIN' = 'admin',
+    'USER' = 'user'
+}

@@ -6,6 +6,13 @@ import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { RoleModule } from './role/role.module';
+import { RoleFeatureModule } from './role-feature/role-feature.module';
+import { FeatureModule } from './feature/feature.module';
+import { User } from './user/entities/user.entity';
+import { Role } from './role/entities/role.entity';
+import { Feature } from './feature/entities/feature.entity';
+import { RoleFeature } from './role-feature/entities/role-feature.entity';
 
 @Module({
   imports: [
@@ -22,12 +29,18 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
         autoLoadEntities: true,
         synchronize: true,
         entities: [
-          UserModule,
+          User,
+          Role,
+          Feature,
+          RoleFeature
         ],
       }),
     }), 
     GenaiModule, 
-    AuthModule
+    AuthModule, 
+    RoleModule, 
+    RoleFeatureModule, 
+    FeatureModule
   ],
   controllers: [],
   providers: [

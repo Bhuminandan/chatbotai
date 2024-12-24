@@ -1,8 +1,11 @@
+import { Role } from 'src/role/entities/role.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -20,6 +23,10 @@ export class User {
 
   @Column({ nullable: true, unique: true })
   email: string | null;
+
+  @ManyToOne(() => Role, (role) => role.user)
+  @JoinColumn({ name: 'role_id' })
+  role: Role;
 
   @Column()
   password: string;

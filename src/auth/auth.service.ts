@@ -42,7 +42,6 @@ export class AuthService {
 
     async generateTokens(payload: any) {
         const accessToken = await this.jwtService.sign(payload);
-        console.log(accessToken);
         // TODO: REFRESH TOKEN
         return { accessToken };
     }

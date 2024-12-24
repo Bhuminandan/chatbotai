@@ -16,5 +16,5 @@ export class Feature {
   action: ALLOWEDACTION;
 
   @OneToMany(() => RoleFeature, (role_feature) => role_feature.feature)
-  role: Feature[];
+  role_feature: RoleFeature[];
 }

@@ -14,5 +14,6 @@ import { FeatureModule } from 'src/feature/feature.module';
 ],
   controllers: [RoleController],
   providers: [RoleService],
+  exports: [RoleService]
 })
 export class RoleModule {}

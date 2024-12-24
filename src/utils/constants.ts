@@ -8,7 +8,10 @@ export enum ALLOWEDACTION {
 
 export enum MODULE_NAME {
     'GUEST' = 'Guest',
-    'USER' = 'User'
+    'USER' = 'User',
+    'ROLES' = 'Roles',
+    'FEATURES' = 'Features',
+    'ROLE_FEATURE' = 'RoleFeature',
 }
 
 

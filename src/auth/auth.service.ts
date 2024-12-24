@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UserService } from 'src/user/user.service';
+import { ROLESNAME } from 'src/utils';
 
 @Injectable()
 export class AuthService {
@@ -48,7 +49,6 @@ export class AuthService {
 
     async signup(_user : Partial<User>) {
         const user = await this.userService.findOneUser({ where: { username: _user.username } });
-        console.log(user);
         if (user) {
             throw new BadRequestException({
               is_success: false,

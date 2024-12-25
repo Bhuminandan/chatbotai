@@ -39,6 +39,7 @@ export class AuthService {
     }
 
     async signin(user: Partial<User>) {
+        console.log(JSON.stringify(user, null, 2));
         const payload = { 
             username: user.username, 
             sub: user.id,

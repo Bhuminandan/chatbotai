@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req } from '@nestjs/common';
 import { RoleService } from './role.service';
 import { ALLOWEDACTION, MODULE_NAME } from 'src/utils';
 import { AllowedAction } from 'src/auth/decorator/action.decorator';
@@ -31,5 +31,50 @@ export class RoleController {
         error,
       };
     }
+  }
+
+  @Get()
+  @AllowedAction(MODULE_NAME.ROLES, ALLOWEDACTION.READ)
+  async listAllRoles(@Req() req) {
+    const roles = await this.roleService.listAllRoles(req.user);
+    return {
+      is_success: true,
+      message: 'Successfully fetched roles',
+      data: roles,
+    };
+  }
+
+  @Put('/:roleId')
+  @AllowedAction(
+    MODULE_NAME.ROLES,
+    ALLOWEDACTION.CREATE,
+    ALLOWEDACTION.READ,
+    ALLOWEDACTION.UPDATE,
+    ALLOWEDACTION.delete,
+  )
+  async update(@Param('roleId') roleId: number, @Body() body: CreateRoleDto) {
+    const { features, ...roleParams } = body;
+    const role = await this.roleService.update(roleId, roleParams, features);
+    return {
+      is_success: true,
+      message: 'Successfully updated',
+      data: role,
+    };
+  }
+
+  @Delete('/:roleId')
+  @AllowedAction(
+    MODULE_NAME.ROLES,
+    ALLOWEDACTION.CREATE,
+    ALLOWEDACTION.READ,
+    ALLOWEDACTION.UPDATE,
+    ALLOWEDACTION.delete,
+  )
+  async delete(@Param('roleId') roleId: number) {
+    await this.roleService.delete(roleId);
+    return {
+      is_success: true,
+      message: 'Successfully deleted role',
+    };
   }
 }

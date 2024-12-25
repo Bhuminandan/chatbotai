@@ -6,6 +6,7 @@ import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { RoleAuthGuard } from './auth/guards/role-auth.guard';
 
 @Module({
   imports: [
@@ -21,20 +22,22 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
         database: configService.get<string>('DB_NAME'),
         autoLoadEntities: true,
         synchronize: true,
-        entities: [
-          UserModule,
-        ],
+        entities: [UserModule],
       }),
-    }), 
-    GenaiModule, 
-    AuthModule
+    }),
+    GenaiModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
-    }
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RoleAuthGuard,
+    },
   ],
 })
 export class AppModule {}

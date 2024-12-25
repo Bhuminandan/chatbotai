@@ -1,12 +1,9 @@
-export enum ALLOWEDACTION {
-    'CREATE' = 'create',
-    'UPDATE' = 'update',
-    'READ' = 'read',
-    'delete' = 'delete',
-    'ALL' = 'all',
+export enum ROLENAMES {
+  'ADMIN' = 'admin',
+  'USER' = 'user',
 }
 
-export enum MODULE_NAME {
-    'GUEST' = 'Guest',
-    'USER' = 'User'
+export enum MODULE_TYPE {
+  'PUBLIC' = 'public',
+  'PRIVATE' = 'private',
 }

@@ -1,3 +1,4 @@
+import { ROLENAMES } from 'src/utils';
 import {
   Column,
   CreateDateColumn,
@@ -18,6 +19,13 @@ export class User {
   @Column()
   username: string;
 
+  @Column({
+    type: 'enum',
+    enum: ROLENAMES,
+    default: ROLENAMES.USER,
+  })
+  role: ROLENAMES;
+
   @Column({ nullable: true, unique: true })
   email: string | null;
 
@@ -32,5 +40,4 @@ export class User {
 
   @DeleteDateColumn()
   deleted_at: Date;
-
 }

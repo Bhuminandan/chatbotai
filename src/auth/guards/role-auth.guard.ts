@@ -1,22 +1,19 @@
 import {
+  CanActivate,
   ExecutionContext,
   Injectable,
   InternalServerErrorException,
   Logger,
-  UnauthorizedException,
 } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { AuthGuard } from '@nestjs/passport';
-import { ROLENAMES, MODULE_TYPE } from 'src/utils';
+import { MODULE_TYPE, ROLENAMES } from 'src/utils';
 import { PERMISSION } from '../decorator/action.decorator';
+import { Reflector } from '@nestjs/core';
 
 @Injectable()
-export class JwtAuthGuard extends AuthGuard('jwt') {
-  constructor(private reflector: Reflector) {
-    super();
-  }
+export class RoleAuthGuard implements CanActivate {
+  constructor(private reflector: Reflector) {}
 
-  canActivate(context: ExecutionContext) {
+  canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();
 
     const metadata = this.reflector.getAllAndOverride<{
@@ -39,19 +36,14 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       return true;
     }
 
-    return super.canActivate(context);
-  }
-
-  handleRequest(err, user, info) {
-    if (err || !user) {
-      throw (
-        err ||
-        new UnauthorizedException({
-          is_success: false,
-          message: 'Access token expired',
-        })
-      );
+    if (isPublic) {
+      return true;
     }
-    return user;
+
+    if (roles.includes(request.user.role)) {
+      return true;
+    }
+
+    return false;
   }
 }

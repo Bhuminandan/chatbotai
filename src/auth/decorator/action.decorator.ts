@@ -1,14 +1,14 @@
 import { SetMetadata, Type } from '@nestjs/common';
-import { ALLOWEDACTION, MODULE_NAME } from 'src/utils';
+import { ROLENAMES, MODULE_TYPE } from 'src/utils';
 
-export const MODULENAME = 'module';
-export const ALLOWACTION = 'allowed_action';
+export const MODULETYPE = 'module_type';
+export const ROLES = 'roles';
 export const PERMISSION = 'permission';
 export const ISPUBLIC = 'is_public';
 
-export const AllowedAction = (
-  module: MODULE_NAME,
-  ...allowedActions: ALLOWEDACTION[]
+export const AllowedRoles = (
+  module_type: MODULE_TYPE,
+  ...roles: ROLENAMES[]
 ): ClassDecorator & MethodDecorator => {
   return (
     target: object | Type<any>,
@@ -21,13 +21,13 @@ export const AllowedAction = (
         return originalMethod.apply(this, args);
       };
       SetMetadata(PERMISSION, {
-        [MODULENAME]: module,
-        [ALLOWACTION]: allowedActions,
+        [MODULETYPE]: module_type,
+        [ROLES]: roles,
       })(target, key, descriptor);
     } else {
       SetMetadata(PERMISSION, {
-        [MODULENAME]: module,
-        [ALLOWACTION]: allowedActions,
+        [MODULETYPE]: module_type,
+        [ROLES]: roles,
       })(target as any);
     }
   };

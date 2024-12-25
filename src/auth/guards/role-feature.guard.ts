@@ -3,7 +3,6 @@ import {
   ExecutionContext,
   ForbiddenException,
   Injectable,
-  Logger,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import _ from 'lodash';

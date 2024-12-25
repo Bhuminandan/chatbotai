@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Role } from './entities/role.entity';
 import { FeatureService } from 'src/feature/feature.service';
 import { RoleFeatureService } from 'src/role-feature/role-feature.service';
